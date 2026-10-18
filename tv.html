@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' https://*.supabase.co; media-src 'self' https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co; worker-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<title>Resultados</title>
+<link rel="stylesheet" href="assets/css/tv.css">
+</head>
+<body>
+
+<div id="escenario">
+
+  <section id="vista-resultados" class="vista">
+    <h1 id="tv-titulo" data-t="tv.titulo"></h1>
+    <div id="barras" class="barras"></div>
+    <p id="tv-total" class="total"></p>
+  </section>
+
+  <section id="vista-slides" class="vista oculta">
+    <div id="slide-contenedor" class="slide-contenedor"></div>
+    <p id="slide-texto" class="slide-texto" hidden></p>
+  </section>
+
+  <div id="ind-conexion" class="indicador ind-conexion" hidden>
+    <span class="punto"></span><span data-t="tv.sin_conexion"></span>
+  </div>
+  <div id="ind-modo" class="indicador ind-modo" hidden></div>
+
+</div>
+
+<script src="assets/vendor/supabase.js"></script>
+<script src="assets/config.js"></script>
+<script type="module" src="assets/js/tv/index.js"></script>
+</body>
+</html>

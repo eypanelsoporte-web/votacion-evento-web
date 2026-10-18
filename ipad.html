@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' https://*.supabase.co; media-src 'self' https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co; worker-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Votación</title>
+<link rel="stylesheet" href="assets/css/ipad.css">
+</head>
+<body>
+
+<header id="barra">
+  <button id="estado-con" class="estado" type="button">
+    <span class="punto" id="estado-punto"></span><span id="estado-texto" data-t="ipad.estado.conectando"></span>
+  </button>
+  <button id="badge-pendientes" class="badge badge-ambar" type="button" hidden></button>
+  <button id="badge-rechazados" class="badge badge-rojo" type="button" hidden></button>
+</header>
+
+<main>
+
+  <section id="pantalla-cargando" class="pantalla">
+    <div class="spinner"></div>
+    <p class="sub" data-t="ipad.cargando"></p>
+  </section>
+
+  <section id="pantalla-error" class="pantalla" hidden>
+    <div class="icono">📡</div>
+    <h1 data-t="ipad.error_datos.titulo"></h1>
+    <p class="sub" data-t="ipad.error_datos.msg"></p>
+  </section>
+
+  <section id="pantalla-login" class="pantalla" hidden>
+    <h1 data-t="ipad.login.titulo"></h1>
+    <p class="sub" data-t="ipad.login.sub"></p>
+    <form id="form-login" class="formulario" novalidate>
+      <label><span data-t="ipad.login.email"></span>
+        <input id="login-email" type="email" inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="username">
+      </label>
+      <label><span data-t="ipad.login.clave"></span>
+        <input id="login-clave" type="password" autocomplete="current-password">
+      </label>
+      <p id="login-msg" class="error-msg" role="alert"></p>
+      <button id="login-btn" class="btn-principal" type="submit" data-t="ipad.login.entrar"></button>
+    </form>
+  </section>
+
+  <section id="pantalla-voto" class="pantalla" hidden>
+    <h1 id="titulo" data-t="ipad.titulo"></h1>
+    <p id="subtitulo" class="sub" data-t="ipad.subtitulo"></p>
+
+    <form id="form-voto" class="formulario" autocomplete="off" novalidate>
+      <label><span data-t="ipad.form.nombre"></span>
+        <input id="nombre" type="text" autocomplete="off" autocapitalize="words" maxlength="120">
+      </label>
+      <label><span data-t="ipad.form.email"></span>
+        <input id="email" type="email" inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off" maxlength="254">
+      </label>
+      <label><span data-t="ipad.form.telefono"></span> <span id="tel-opcional" class="opcional" data-t="ipad.form.opcional"></span>
+        <input id="telefono" type="tel" inputmode="tel" autocomplete="off" maxlength="30">
+      </label>
+      <label id="fila-consent" class="consent">
+        <input id="consent" type="checkbox">
+        <span data-t="ipad.consentimiento"></span>
+      </label>
+    </form>
+
+    <div id="opciones" class="opciones"></div>
+    <p id="ayuda-form" class="ayuda"></p>
+  </section>
+
+  <section id="pantalla-enviando" class="pantalla" hidden>
+    <div class="spinner"></div>
+    <p class="sub" data-t="ipad.enviando"></p>
+  </section>
+
+  <section id="pantalla-gracias" class="pantalla" hidden>
+    <div class="icono">✅</div>
+    <h1 data-t="ipad.gracias.titulo"></h1>
+    <p id="gracias-opcion" class="sub"></p>
+  </section>
+
+  <section id="pantalla-diferido" class="pantalla" hidden>
+    <div class="icono">📶</div>
+    <h1 data-t="ipad.diferido.titulo"></h1>
+    <p class="sub" data-t="ipad.diferido.msg"></p>
+  </section>
+
+  <section id="pantalla-rechazo" class="pantalla" hidden>
+    <div class="icono">⚠️</div>
+    <h1 id="rechazo-titulo"></h1>
+    <p id="rechazo-msg" class="sub"></p>
+    <button id="rechazo-btn" class="btn-principal" type="button"></button>
+  </section>
+
+</main>
+
+<div id="control" class="overlay" hidden>
+  <div class="panel">
+    <h2 data-t="ipad.control.titulo"></h2>
+
+    <div class="grupo">
+      <h3 data-t="ipad.control.estado"></h3>
+      <ul id="ctl-estado" class="lista"></ul>
+    </div>
+
+    <div class="grupo">
+      <h3 data-t="ipad.control.modo"></h3>
+      <div class="fila-btn" id="ctl-modos">
+        <button type="button" data-modo="auto" data-t="ipad.control.modo.auto"></button>
+        <button type="button" data-modo="resultados" data-t="ipad.control.modo.resultados"></button>
+        <button type="button" data-modo="descanso" data-t="ipad.control.modo.descanso"></button>
+      </div>
+      <p id="ctl-modo-msg" class="msg"></p>
+    </div>
+
+    <div class="grupo">
+      <h3 data-t="ipad.control.acciones"></h3>
+      <div class="fila-btn">
+        <button type="button" id="ctl-recargar-tv" data-t="ipad.control.recargar_tv"></button>
+        <button type="button" id="ctl-recargar-ipad" data-t="ipad.control.recargar_ipad"></button>
+      </div>
+      <p id="ctl-accion-msg" class="msg"></p>
+    </div>
+
+    <div class="grupo" id="ctl-grupo-pend" hidden>
+      <h3 data-t="ipad.control.pendientes"></h3>
+      <p id="ctl-pend-txt" class="msg"></p>
+      <button type="button" id="ctl-reenviar" data-t="ipad.control.reenviar"></button>
+    </div>
+
+    <div class="grupo" id="ctl-grupo-rech" hidden>
+      <h3 data-t="ipad.control.rechazados"></h3>
+      <ul id="ctl-rech-lista" class="lista"></ul>
+    </div>
+
+    <button id="ctl-cerrar" class="btn-sec" type="button" data-t="ipad.control.cerrar"></button>
+  </div>
+</div>
+
+<script src="assets/vendor/supabase.js"></script>
+<script src="assets/config.js"></script>
+<script type="module" src="assets/js/ipad/index.js"></script>
+</body>
+</html>

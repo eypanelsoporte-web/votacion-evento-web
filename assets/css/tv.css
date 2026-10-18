@@ -1,0 +1,73 @@
+/* Estilos de la TV. Solo presentacion: el diseno final puede reemplazar este
+ * archivo y tv.html sin tocar el JavaScript (se conservan los id y las clases).
+ * El escenario es un lienzo vertical de 1080 x 1920 que se escala solo. */
+:root {
+  --fondo: #0b0b0d;
+  --panel: #17171b;
+  --borde: #2a2a30;
+  --texto: #f5f5f5;
+  --suave: #9a9aa2;
+  --primario: #e11d2e;
+  --primario-osc: #a4141f;
+  --ambar: #e1a91d;
+  --rojo: #e5484d;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; height: 100%; overflow: hidden; background: #000; color: var(--texto);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  cursor: none;
+}
+[hidden] { display: none !important; }
+
+#escenario {
+  position: absolute; left: 50%; top: 50%; width: 1080px; height: 1920px;
+  transform-origin: center center; background: var(--fondo); overflow: hidden;
+}
+
+.vista {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  transition: opacity .6s ease;
+}
+.vista.oculta { opacity: 0; pointer-events: none; visibility: hidden; transition: opacity .6s ease, visibility 0s .6s; }
+
+/* ---------- Resultados ---------- */
+#vista-resultados { padding: 150px 90px 110px; justify-content: center; }
+#tv-titulo { font-size: 104px; line-height: 1.1; margin: 0 0 110px; text-align: center; }
+.barras { display: flex; flex-direction: column; gap: 70px; }
+.fila-cabecera { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; margin-bottom: 18px; }
+.fila-etiqueta { font-size: 68px; font-weight: 700; }
+.fila-valor { font-size: 46px; color: var(--suave); white-space: nowrap; }
+.barra-fondo { height: 96px; background: var(--panel); border-radius: 48px; overflow: hidden; }
+.barra-relleno {
+  height: 100%; width: 0; border-radius: 48px;
+  background: linear-gradient(90deg, var(--primario-osc), var(--primario));
+  transition: width .8s cubic-bezier(.4, 0, .2, 1);
+}
+.total { margin: 100px 0 0; text-align: center; font-size: 42px; color: var(--suave); }
+
+/* ---------- Diapositivas ---------- */
+#vista-slides { background: #000; }
+.slide-contenedor { position: absolute; inset: 0; }
+.slide-contenedor img, .slide-contenedor video {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+  opacity: 1; transition: opacity .6s ease;
+}
+.slide-contenedor .entrando { opacity: 0; }
+.slide-texto {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  margin: 0; padding: 0 80px; text-align: center; font-size: 110px; font-weight: 700;
+}
+
+/* ---------- Avisos ---------- */
+.indicador {
+  position: absolute; top: 36px; display: flex; align-items: center; gap: 14px; z-index: 10;
+  font-size: 30px; color: var(--suave); background: rgba(23, 23, 27, .88);
+  padding: 14px 26px; border-radius: 999px;
+}
+.ind-conexion { right: 36px; }
+.ind-modo { left: 36px; }
+.indicador .punto { width: 16px; height: 16px; border-radius: 50%; background: var(--ambar); animation: parpadeo 1s ease-in-out infinite; }
+@keyframes parpadeo { 50% { opacity: .3; } }
+
+.error-fatal { margin: 60px; padding: 40px; white-space: pre-wrap; font-size: 40px; color: var(--rojo); }
