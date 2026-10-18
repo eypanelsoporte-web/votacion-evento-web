@@ -26,7 +26,7 @@ export function crear(etiqueta, { clase, texto, atributos, hijos, alClick } = {}
 
 export function mostrarFatal(error) {
   // Error de despliegue (configuracion faltante): se muestra tal cual, sin base de datos.
-  document.querySelectorAll('main, header').forEach((el) => { el.hidden = true; });
+  document.querySelectorAll('main, header, section').forEach((el) => { el.hidden = true; });
   const pre = document.createElement('pre');
   pre.className = 'error-fatal';
   pre.textContent = String(error && error.message ? error.message : error);

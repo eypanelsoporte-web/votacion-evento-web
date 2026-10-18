@@ -29,3 +29,15 @@ export function antirrebote(funcion, ms) {
 export function acotar(numero, minimo, maximo) {
   return Math.min(maximo, Math.max(minimo, numero));
 }
+
+// Reparte 100 entre los valores sin que la suma se pase o falte (metodo del mayor resto).
+export function porcentajes(valores) {
+  const total = valores.reduce((a, b) => a + b, 0);
+  if (!total) return valores.map(() => 0);
+  const exactos = valores.map((v) => (v / total) * 100);
+  const bases = exactos.map(Math.floor);
+  let faltan = 100 - bases.reduce((a, b) => a + b, 0);
+  const orden = exactos.map((e, i) => ({ i, resto: e - bases[i] })).sort((a, b) => b.resto - a.resto);
+  for (const { i } of orden) { if (faltan <= 0) break; bases[i] += 1; faltan -= 1; }
+  return bases;
+}

@@ -40,6 +40,27 @@ export const VALORES_SEGUROS = Object.freeze({
   ipad_max_intentos: 5,
   ipad_retencion_rechazados_h: 48,
 
+  zona_horaria: 'America/Argentina/Buenos_Aires',
+
+  admin_secciones: {
+    consulta: ['resumen', 'votos', 'exportar'],
+    admin: ['resumen', 'votos', 'exportar', 'usuarios', 'contenido', 'en_vivo', 'auditoria'],
+    superadmin: ['resumen', 'votos', 'exportar', 'usuarios', 'contenido', 'en_vivo', 'auditoria', 'registros'],
+  },
+  admin_estados_votos: {
+    consulta: ['validos', 'pruebas'],
+    admin: ['validos', 'pruebas', 'eliminados', 'todos'],
+    superadmin: ['validos', 'pruebas', 'eliminados', 'todos'],
+  },
+  admin_roles_gestionables: { admin: ['consulta'], superadmin: ['consulta', 'operador', 'admin'] },
+  admin_filas_por_pagina: 25,
+  admin_max_exportar: 20000,
+  admin_refresco_s: 15,
+  admin_sesion_inactividad_min: 30,
+  admin_aviso_s: 6,
+  admin_clave_min: 12,
+  admin_retencion_logs_dias: 30,
+
   medios_hosts: ['*.supabase.co'],
   tema: {
     fondo: '#0b0b0d', panel: '#17171b', borde: '#2a2a30', texto: '#f5f5f5', suave: '#9a9aa2',

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' https://*.supabase.co; media-src 'self' https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co; worker-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Panel</title>
+<link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+
+<section id="vista-cargando" class="vista-centro">
+  <div class="spinner"></div>
+  <p class="ayuda" data-t="admin.cargando"></p>
+</section>
+
+<section id="vista-login" class="vista-centro" hidden>
+  <form id="form-login" class="tarjeta-login" novalidate>
+    <h1 data-t="admin.login.titulo"></h1>
+    <label class="campo"><span class="campo-etiqueta" data-t="admin.login.email"></span>
+      <input id="login-email" type="email" inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="username">
+    </label>
+    <label class="campo"><span class="campo-etiqueta" data-t="admin.login.clave"></span>
+      <input id="login-clave" type="password" autocomplete="current-password">
+    </label>
+    <p id="login-msg" class="msg-error" role="alert"></p>
+    <button id="login-btn" class="btn-principal" type="submit" data-t="admin.login.entrar"></button>
+  </form>
+</section>
+
+<section id="vista-panel" hidden>
+  <header class="barra-admin">
+    <h1 class="marca" data-t="admin.titulo"></h1>
+    <nav id="navegacion" class="navegacion" data-t-aria="admin.nav.etiqueta"></nav>
+    <div class="cuenta">
+      <span id="cuenta-info" class="cuenta-info"></span>
+      <button id="btn-mi-cuenta" class="btn-sec" type="button" data-t="admin.cuenta.boton"></button>
+      <button id="btn-salir" class="btn-sec" type="button" data-t="admin.salir"></button>
+    </div>
+  </header>
+  <main id="contenido-secciones" class="contenido"></main>
+</section>
+
+<div id="avisos" class="avisos" aria-live="polite"></div>
+<dialog id="dialogo" class="dialogo"></dialog>
+
+<script src="assets/vendor/supabase.js"></script>
+<script src="assets/config.js"></script>
+<script type="module" src="assets/js/admin/index.js"></script>
+</body>
+</html>

@@ -1,21 +1,10 @@
 // Vista de resultados: una barra por opcion con cantidad y porcentaje.
 import { crear, porId, vaciar } from '../nucleo/dom.js';
 import { t } from '../nucleo/textos.js';
+import { porcentajes } from '../nucleo/util.js';
 import { estado, totalVotos } from './datos.js';
 
 let filas = new Map(); // opcion_id -> { barra, valor }
-
-// Reparte 100 entre las opciones sin que la suma se pase o falte (mayor resto).
-function porcentajes(valores) {
-  const total = valores.reduce((a, b) => a + b, 0);
-  if (!total) return valores.map(() => 0);
-  const exactos = valores.map((v) => (v / total) * 100);
-  const bases = exactos.map(Math.floor);
-  let faltan = 100 - bases.reduce((a, b) => a + b, 0);
-  const orden = exactos.map((e, i) => ({ i, resto: e - bases[i] })).sort((a, b) => b.resto - a.resto);
-  for (const { i } of orden) { if (faltan <= 0) break; bases[i] += 1; faltan -= 1; }
-  return bases;
-}
 
 export function construirResultados() {
   const cont = porId('barras');
