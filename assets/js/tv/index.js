@@ -9,6 +9,7 @@ import { iniciarDatos, alCambiar, estado, totalVotos } from './datos.js';
 import { iniciarControlador, vistaActual } from './controlador.js';
 import { iniciarIndicadores, pintarModo } from './indicadores.js';
 import { indiceActual } from './diapositivas.js';
+import { iniciarPantallaCompleta } from './pantalla-completa.js';
 
 async function principal() {
   let dispositivo;
@@ -26,6 +27,7 @@ async function principal() {
   await iniciarDatos();
   iniciarControlador({ alCambiarModo: pintarModo });
   iniciarIndicadores();
+  iniciarPantallaCompleta();
 
   iniciarLatido({
     dispositivo,

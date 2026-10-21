@@ -82,6 +82,7 @@ var PRECACHE = [
   'assets/js/tv/escenario.js',
   'assets/js/tv/index.js',
   'assets/js/tv/indicadores.js',
+  'assets/js/tv/pantalla-completa.js',
   'assets/js/tv/resultados.js',
   'assets/vendor/compat.js',
   'assets/vendor/supabase.js'
