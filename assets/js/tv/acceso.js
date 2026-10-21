@@ -7,6 +7,7 @@ import { cfg } from '../nucleo/configuracion.js';
 import { porId } from '../nucleo/dom.js';
 import { t } from '../nucleo/textos.js';
 import { sesionActual, obtenerPerfil, iniciarSesion, alCerrarSesion } from '../nucleo/sesion.js';
+import { entrarEnPantallaCompleta } from './pantalla-completa.js';
 
 // Quienes pueden ver la TV: su usuario propio y el equipo que la configura.
 const ROLES_TV = ['tv', 'admin', 'superadmin'];
@@ -38,6 +39,9 @@ function pedirIngreso(motivo) {
 
     porId('form-login').addEventListener('submit', async (e) => {
       e.preventDefault();
+      // Apretar "Entrar" es el gesto que el navegador exige para la pantalla completa: se pide ya, antes de
+      // esperar la respuesta del servidor, y oculta las barras del navegador de la tele.
+      entrarEnPantallaCompleta();
       const email = porId('login-email').value.trim();
       const clave = porId('login-clave').value;
       if (!email || !clave) { mensaje.textContent = textoDeError('vacio'); return; }

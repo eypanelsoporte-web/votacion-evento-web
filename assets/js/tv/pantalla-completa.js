@@ -19,6 +19,20 @@ function alternar() {
   }
 }
 
+// Pasa a pantalla completa (sin alternar). Hay que llamarla dentro de un gesto de la persona (apretar
+// un boton o una tecla): el navegador no la permite si no. La usa el boton "Entrar" del ingreso.
+export function entrarEnPantallaCompleta() {
+  if (enPantallaCompleta()) return;
+  const raiz = document.documentElement;
+  const pedir = raiz.requestFullscreen || raiz.webkitRequestFullscreen;
+  try {
+    const respuesta = pedir && pedir.call(raiz);
+    if (respuesta && typeof respuesta.catch === 'function') respuesta.catch(() => {});
+  } catch (e) {
+    // El navegador no lo permite: la TV sigue igual, solo con sus barras.
+  }
+}
+
 export function iniciarPantallaCompleta() {
   document.addEventListener('keydown', (e) => {
     // En el formulario de ingreso, Enter sirve para enviarlo: ahi no se toca la pantalla completa.

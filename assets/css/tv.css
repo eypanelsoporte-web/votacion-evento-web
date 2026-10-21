@@ -31,25 +31,27 @@ html, body {
 }
 .vista.oculta { opacity: 0; pointer-events: none; visibility: hidden; transition: opacity .6s ease, visibility 0s .6s; }
 
-/* ---------- Ingreso (los resultados son datos de la empresa) ---------- */
+/* ---------- Ingreso (los resultados son datos de la empresa) ----------
+ * Siempre en horizontal y sin girar, aunque la TV vaya despues en vertical: se escribe una sola vez y
+ * se lee derecho. Las medidas son relativas a la pantalla (vmin), no al lienzo de 1080 x 1920. */
 body.con-cursor { cursor: auto; }
 .pantalla-login {
-  position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 30; background: var(--fondo);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 110px;
+  position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 30; background: var(--fondo);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
-.pantalla-login h1 { font-size: 92px; margin: 0 0 24px; text-align: center; }
-.login-sub { font-size: 40px; color: var(--suave); margin: 0 0 90px; text-align: center; }
-#form-login { width: 100%; }
-.login-campo { display: block; margin-bottom: 44px; font-size: 36px; color: var(--suave); }
+.pantalla-login h1 { font-size: 7vmin; margin: 0 0 1.5vmin; text-align: center; }
+.login-sub { font-size: 3vmin; color: var(--suave); margin: 0 0 5vmin; text-align: center; }
+#form-login { width: 70vmin; }
+.login-campo { display: block; margin-bottom: 3vmin; font-size: 2.6vmin; color: var(--suave); }
 .login-campo input {
-  display: block; width: 100%; margin-top: 16px; padding: 30px 34px; font-size: 48px; color: var(--texto);
-  background: #0f0f12; border: 3px solid var(--borde); border-radius: 22px; outline: none;
+  display: block; width: 100%; margin-top: 1vmin; padding: 2vmin 2.4vmin; font-size: 4vmin; color: var(--texto);
+  background: #0f0f12; border: 0.3vmin solid var(--borde); border-radius: 1.6vmin; outline: none;
 }
 .login-campo input:focus { border-color: var(--primario); }
-.login-msg { min-height: 60px; margin: 0 0 24px; font-size: 38px; color: var(--rojo); text-align: center; }
+.login-msg { min-height: 4vmin; margin: 0 0 2vmin; font-size: 2.8vmin; color: var(--rojo); text-align: center; }
 #login-btn {
-  display: block; width: 100%; padding: 34px; font-size: 52px; font-weight: 700; color: #fff; cursor: pointer;
-  background: linear-gradient(160deg, var(--primario), var(--primario-osc)); border: 0; border-radius: 22px;
+  display: block; width: 100%; padding: 2.2vmin; font-size: 4vmin; font-weight: 700; color: #fff; cursor: pointer;
+  background: linear-gradient(160deg, var(--primario), var(--primario-osc)); border: 0; border-radius: 1.6vmin;
 }
 #login-btn:disabled { opacity: .5; }
 
