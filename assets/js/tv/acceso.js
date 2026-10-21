@@ -3,6 +3,7 @@
 // en el aparato y se renueva sola; si deja de valer (usuario dado de baja, clave cambiada), vuelve a pedirla.
 import { cliente } from '../nucleo/cliente.js';
 import { almacen } from '../nucleo/almacen.js';
+import { cfg } from '../nucleo/configuracion.js';
 import { porId } from '../nucleo/dom.js';
 import { t } from '../nucleo/textos.js';
 import { sesionActual, obtenerPerfil, iniciarSesion, alCerrarSesion } from '../nucleo/sesion.js';
@@ -57,19 +58,23 @@ function pedirIngreso(motivo) {
   });
 }
 
-// Devuelve cuando hay una sesion valida. Si no la hay, pide usuario y clave.
+// Resuelve el acceso y devuelve true si la TV quedo con sesion iniciada.
+// Si el superadmin apago el interruptor tv_requiere_login (modo abierto de prueba) y no hay sesion,
+// la TV sigue sin usuario (devuelve false). Con el interruptor encendido (lo normal) pide usuario y clave.
 export async function asegurarAcceso() {
   let motivo = '';
   const sesion = await sesionActual();
   if (sesion) {
     const perfil = await obtenerPerfil(sesion.user.id);
-    if (perfil === undefined) return; // sin internet: se sigue con la sesion guardada
-    if (perfil && ROLES_TV.includes(perfil.rol)) return;
+    if (perfil === undefined) return true; // sin internet: se sigue con la sesion guardada
+    if (perfil && ROLES_TV.includes(perfil.rol)) return true;
     await cliente().auth.signOut(); // usuario desactivado o con otro rol
     olvidarDatos();
     motivo = perfil ? 'permiso' : '';
   }
+  if (!cfg.bool('tv_requiere_login')) return false;
   await pedirIngreso(motivo);
+  return true;
 }
 
 // Si la sesion se cierra mientras la TV esta andando, se borran las copias y se vuelve al ingreso.

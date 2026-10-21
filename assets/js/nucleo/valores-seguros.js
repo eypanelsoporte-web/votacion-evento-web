@@ -40,6 +40,8 @@ export const VALORES_SEGUROS = Object.freeze({
   ipad_max_intentos: 5,
   ipad_retencion_rechazados_h: 48,
 
+  tv_requiere_login: true, // ante la duda, la TV pide usuario y clave
+
   zona_horaria: 'America/Argentina/Buenos_Aires',
 
   admin_secciones: {

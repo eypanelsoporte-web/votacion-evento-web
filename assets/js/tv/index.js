@@ -1,5 +1,6 @@
 // Punto de entrada de la TV: arma las piezas y las pone en marcha.
 import { iniciarNucleo, cargarContenidoBase, refrescarPresentacion } from '../nucleo/arranque.js';
+import { cfg } from '../nucleo/configuracion.js';
 import { mostrarFatal } from '../nucleo/dom.js';
 import { iniciarLatido } from '../nucleo/dispositivo.js';
 import { iniciarVigilancia } from '../nucleo/vigilancia.js';
@@ -15,6 +16,7 @@ import { asegurarAcceso, vigilarSesion } from './acceso.js';
 async function principal() {
   let dispositivo;
   let conAcceso = false;
+  let conSesion = false;
   try {
     ({ dispositivo } = await iniciarNucleo({ tipo: 'tv', persistir: true }));
   } catch (error) {
@@ -37,12 +39,17 @@ async function principal() {
       }
       : { vista: 'ingreso', ancho: window.innerWidth, alto: window.innerHeight }),
   });
-  await asegurarAcceso();
+  conSesion = await asegurarAcceso();
   conAcceso = true;
-  vigilarSesion();
+  if (conSesion) vigilarSesion();
   // Se registra ANTES de leer los datos: asi tema, textos y rotacion recien
   // descargados se aplican de inmediato, y no los de la copia vieja.
-  alCambiar('presentacion', () => { refrescarPresentacion(); ajustarEscenario(); });
+  alCambiar('presentacion', () => {
+    refrescarPresentacion();
+    ajustarEscenario();
+    // Si encienden la proteccion mientras la TV anda sin usuario, se recarga para pedirlo.
+    if (!conSesion && cfg.bool('tv_requiere_login')) window.location.reload();
+  });
   await iniciarDatos();
   iniciarControlador({ alCambiarModo: pintarModo });
   iniciarIndicadores();
