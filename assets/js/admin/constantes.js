@@ -6,5 +6,5 @@ export const ESTADOS_VOTOS = ['validos', 'pruebas', 'eliminados', 'todos'];
 export const FORMATOS_REPORTE = ['xlsx', 'pdf'];
 export const NIVELES_LOG = ['debug', 'info', 'warn', 'error', 'fatal'];
 export const ORIGENES_LOG = ['tv', 'ipad', 'admin', 'db', 'otro'];
-export const ROLES = ['superadmin', 'admin', 'consulta', 'operador'];
-export const ACCIONES_AUDITORIA = ['INSERT', 'UPDATE', 'DELETE', 'exportar', 'abrir_panel', 'crear', 'activar', 'desactivar', 'resetear_clave'];
+export const ROLES = ['superadmin', 'admin', 'consulta', 'operador', 'tv'];
+export const ACCIONES_AUDITORIA = ['INSERT', 'UPDATE', 'DELETE', 'exportar', 'abrir_panel', 'crear', 'activar', 'desactivar', 'resetear_clave', 'cambiar_rol'];

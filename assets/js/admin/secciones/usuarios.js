@@ -76,6 +76,33 @@ async function pedirConfirmacion(claveMensaje, usuario) {
   return confirmar({ titulo: t('admin.confirmar_titulo'), mensaje: t(claveMensaje, { email: usuario.email || usuario.nombre || '' }) });
 }
 
+// Cambiar el rol: ventana con los roles que quien esta conectado puede asignar (lo define la configuracion).
+function abrirCambioDeRol(u) {
+  const rol = campoSelect({
+    etiqueta: 'admin.usuarios.campo.rol', valor: u.rol,
+    opciones: rolesGestionables(ctx.rol).map((r) => ({ valor: r, texto: t(`admin.rol.${r}`) })),
+  });
+  const error = crear('p', { clase: 'msg-error', atributos: { role: 'alert' } });
+  abrirDialogo({
+    titulo: t('admin.usuarios.cambiar_rol_titulo', { email: u.email || u.nombre || '' }),
+    cuerpo: crear('div', { clase: 'formulario-dialogo', hijos: [crear('p', { clase: 'ayuda', texto: t('admin.usuarios.cambiar_rol_ayuda') }), rol.el, error] }),
+    acciones: [
+      { clave: 'admin.cancelar' },
+      {
+        clave: 'admin.guardar', clase: 'btn-principal',
+        alClick: async () => {
+          if (rol.leer() === u.rol) return true;
+          const r = await gestionar('cambiar_rol', { user_id: u.user_id, rol: rol.leer() });
+          if (!r.ok) { error.textContent = t(claveErrorUsuario(r.codigo)); return false; }
+          avisar(t('admin.usuarios.rol_cambiado'));
+          await pintar();
+          return true;
+        },
+      },
+    ],
+  });
+}
+
 function botones(u) {
   const propios = u.user_id === ctx.perfil.userId;
   if (propios || !rolesGestionables(ctx.rol).includes(u.rol)) return crear('span', { clase: 'detalle', texto: propios ? t('admin.usuarios.usted') : '' });
@@ -93,7 +120,10 @@ function botones(u) {
       await ejecutar('resetear_clave', { user_id: u.user_id }, 'admin.usuarios.reseteado');
     },
   });
-  return crear('div', { clase: 'acciones-fila', hijos: [alternar, resetear] });
+  const cambiarRol = rolesGestionables(ctx.rol).length > 1
+    ? crear('button', { clase: 'btn-sec', texto: t('admin.usuarios.cambiar_rol'), atributos: { type: 'button' }, alClick: () => abrirCambioDeRol(u) })
+    : null; // con un solo rol posible no hay nada que elegir
+  return crear('div', { clase: 'acciones-fila', hijos: [alternar, cambiarRol, resetear] });
 }
 
 async function pintar() {

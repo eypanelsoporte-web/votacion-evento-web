@@ -40,7 +40,7 @@ export function refrescarPresentacion() {
 }
 
 export async function iniciarNucleo({ tipo, persistir }) {
-  crearCliente({ persistir });
+  crearCliente({ persistir, tipo });
   const dispositivo = identificar(tipo);
   configurarRegistro({ tipo, dispositivoId: dispositivo.id, version: versionApp() });
   instalarManejadoresGlobales();

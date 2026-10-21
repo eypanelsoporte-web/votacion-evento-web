@@ -29,7 +29,9 @@ function claveEsPrivada(clave) {
   }
 }
 
-export function crearCliente({ persistir }) {
+// tipo: 'tv' | 'ipad' | 'admin'. Cada tipo guarda su sesion en un lugar propio, asi que la TV, el iPad y el
+// panel no se pisan entre si aunque se abran en el mismo navegador.
+export function crearCliente({ persistir, tipo }) {
   const url = String(DESPLIEGUE.SUPABASE_URL || '');
   const clave = String(DESPLIEGUE.SUPABASE_ANON_KEY || '');
   if (!window.supabase || typeof window.supabase.createClient !== 'function') {
@@ -43,7 +45,7 @@ export function crearCliente({ persistir }) {
     throw new Error('assets/config.js contiene una clave PRIVADA (service_role). Usar solo la clave publica "anon".');
   }
   sb = window.supabase.createClient(url, clave, {
-    auth: { persistSession: persistir, autoRefreshToken: persistir, detectSessionInUrl: false },
+    auth: { persistSession: persistir, autoRefreshToken: persistir, detectSessionInUrl: false, storageKey: `evento-${tipo || 'app'}-auth` },
     realtime: { params: { eventsPerSecond: 5 } },
   });
   return sb;

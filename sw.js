@@ -76,6 +76,7 @@ var PRECACHE = [
   'assets/js/nucleo/util.js',
   'assets/js/nucleo/valores-seguros.js',
   'assets/js/nucleo/vigilancia.js',
+  'assets/js/tv/acceso.js',
   'assets/js/tv/controlador.js',
   'assets/js/tv/datos.js',
   'assets/js/tv/diapositivas.js',

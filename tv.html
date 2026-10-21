@@ -25,6 +25,21 @@
     <p id="slide-texto" class="slide-texto" hidden></p>
   </section>
 
+  <section id="vista-login" class="pantalla-login" hidden>
+    <h1 data-t="tv.login.titulo"></h1>
+    <p class="login-sub" data-t="tv.login.sub"></p>
+    <form id="form-login" novalidate>
+      <label class="login-campo"><span data-t="tv.login.email"></span>
+        <input id="login-email" type="email" inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="username">
+      </label>
+      <label class="login-campo"><span data-t="tv.login.clave"></span>
+        <input id="login-clave" type="password" autocomplete="current-password">
+      </label>
+      <p id="login-msg" class="login-msg" role="alert"></p>
+      <button id="login-btn" type="submit" data-t="tv.login.entrar"></button>
+    </form>
+  </section>
+
   <div id="ind-conexion" class="indicador ind-conexion" hidden>
     <span class="punto"></span><span data-t="tv.sin_conexion"></span>
   </div>

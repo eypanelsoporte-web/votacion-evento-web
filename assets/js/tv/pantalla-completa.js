@@ -21,6 +21,9 @@ function alternar() {
 
 export function iniciarPantallaCompleta() {
   document.addEventListener('keydown', (e) => {
+    // En el formulario de ingreso, Enter sirve para enviarlo: ahi no se toca la pantalla completa.
+    const ingreso = e.target && e.target.closest ? e.target.closest('#vista-login') : null;
+    if (ingreso && !ingreso.hidden) return;
     if (TECLAS.includes(e.key) || e.keyCode === CODIGO_OK) alternar();
   });
 }

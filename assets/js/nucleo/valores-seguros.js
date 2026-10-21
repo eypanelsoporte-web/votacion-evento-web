@@ -44,7 +44,7 @@ export const VALORES_SEGUROS = Object.freeze({
 
   admin_secciones: {
     consulta: ['resumen', 'votos', 'exportar'],
-    admin: ['resumen', 'votos', 'exportar', 'usuarios', 'contenido', 'en_vivo', 'auditoria'],
+    admin: ['resumen', 'votos', 'exportar', 'usuarios', 'contenido', 'en_vivo'],
     superadmin: ['resumen', 'votos', 'exportar', 'usuarios', 'contenido', 'en_vivo', 'auditoria', 'registros'],
   },
   admin_estados_votos: {
@@ -52,7 +52,7 @@ export const VALORES_SEGUROS = Object.freeze({
     admin: ['validos', 'pruebas', 'eliminados', 'todos'],
     superadmin: ['validos', 'pruebas', 'eliminados', 'todos'],
   },
-  admin_roles_gestionables: { admin: ['consulta'], superadmin: ['consulta', 'operador', 'admin'] },
+  admin_roles_gestionables: { admin: ['consulta'], superadmin: ['consulta', 'operador', 'admin', 'tv'] },
   admin_filas_por_pagina: 25,
   admin_max_exportar: 20000,
   admin_refresco_s: 15,

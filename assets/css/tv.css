@@ -31,6 +31,28 @@ html, body {
 }
 .vista.oculta { opacity: 0; pointer-events: none; visibility: hidden; transition: opacity .6s ease, visibility 0s .6s; }
 
+/* ---------- Ingreso (los resultados son datos de la empresa) ---------- */
+body.con-cursor { cursor: auto; }
+.pantalla-login {
+  position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 30; background: var(--fondo);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 110px;
+}
+.pantalla-login h1 { font-size: 92px; margin: 0 0 24px; text-align: center; }
+.login-sub { font-size: 40px; color: var(--suave); margin: 0 0 90px; text-align: center; }
+#form-login { width: 100%; }
+.login-campo { display: block; margin-bottom: 44px; font-size: 36px; color: var(--suave); }
+.login-campo input {
+  display: block; width: 100%; margin-top: 16px; padding: 30px 34px; font-size: 48px; color: var(--texto);
+  background: #0f0f12; border: 3px solid var(--borde); border-radius: 22px; outline: none;
+}
+.login-campo input:focus { border-color: var(--primario); }
+.login-msg { min-height: 60px; margin: 0 0 24px; font-size: 38px; color: var(--rojo); text-align: center; }
+#login-btn {
+  display: block; width: 100%; padding: 34px; font-size: 52px; font-weight: 700; color: #fff; cursor: pointer;
+  background: linear-gradient(160deg, var(--primario), var(--primario-osc)); border: 0; border-radius: 22px;
+}
+#login-btn:disabled { opacity: .5; }
+
 /* ---------- Resultados ---------- */
 #vista-resultados { padding: 150px 90px 110px; justify-content: center; }
 #tv-titulo { font-size: 104px; line-height: 1.1; margin: 0 0 110px; text-align: center; }
