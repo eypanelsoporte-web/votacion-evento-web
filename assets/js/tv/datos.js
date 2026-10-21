@@ -36,7 +36,7 @@ async function leerConteos() {
   const cambio = totalAnterior === null || JSON.stringify([...nuevo]) !== JSON.stringify([...estado.conteos]);
   totalAnterior = total;
   estado.conteos = nuevo;
-  almacen.guardar('tv_conteos', Object.fromEntries(nuevo));
+  almacen.guardar('tv_conteos', [...nuevo].reduce((obj, [clave, valor]) => ({ ...obj, [clave]: valor }), {}));
   if (cambio) emitir('conteos', { aumento });
 }
 

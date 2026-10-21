@@ -63,20 +63,25 @@ export function esErrorDeAuth(r) {
 }
 
 // Ejecuta una consulta (o rpc) con tiempo limite. Nunca lanza: devuelve {data, error, status}.
+// El limite no depende de que el navegador sepa cancelar pedidos (los viejos, como el de algunas
+// teles, ignoran la senal): a los N segundos se responde con error aunque el pedido siga en curso.
 export function consulta(builder, esperaMs) {
   const ctrl = new AbortController();
-  const limite = setTimeout(() => ctrl.abort(), esperaMs || tiempoLimiteMs);
-  return Promise.resolve(builder.abortSignal(ctrl.signal)).then(
+  let limite = null;
+  const vencido = new Promise((resolver) => {
+    limite = setTimeout(() => {
+      ctrl.abort();
+      resolver({ data: null, error: { message: 'timeout' }, status: 408 });
+    }, esperaMs || tiempoLimiteMs);
+  });
+  const pedido = Promise.resolve(builder.abortSignal(ctrl.signal)).then(
     (r) => {
-      clearTimeout(limite);
       if (r && !r.error) ultimoContacto = Date.now();
       return r;
     },
-    (e) => {
-      clearTimeout(limite);
-      return { data: null, error: e || { message: 'error de red' }, status: 0 };
-    },
+    (e) => ({ data: null, error: e || { message: 'error de red' }, status: 0 }),
   );
+  return Promise.race([pedido, vencido]).then((r) => { clearTimeout(limite); return r; });
 }
 
 export const rpc = (nombre, args, esperaMs) => consulta(sb.rpc(nombre, args || {}), esperaMs);
