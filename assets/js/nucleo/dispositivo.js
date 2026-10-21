@@ -7,7 +7,7 @@ import { logsPendientes, vaciarLogs } from './registro.js';
 
 export function identificar(tipo) {
   const params = new URLSearchParams(location.search);
-  const nombreUrl = (params.get('nombre') || '').replace(/[^\p{L}\p{N} ._-]/gu, '').slice(0, 60);
+  const nombreUrl = (params.get('nombre') || '').replace(/[^A-Za-z0-9À-ɏ ._-]/g, '').slice(0, 60);
   if (nombreUrl) almacen.guardar(`device_nombre_${tipo}`, nombreUrl);
 
   let id = almacen.leer(`device_id_${tipo}`, null);
